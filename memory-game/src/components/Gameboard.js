@@ -7,7 +7,7 @@ function Gameboard (props) {
 	return (
 		<div className="gameboard">
             {props.cards.map((card) => { 
-                return <Card name={card.name} img={card.img}/> 
+                return <Card cardData={card} key={card.id}/>; 
             })}
 		</div>
 	);

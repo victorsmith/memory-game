@@ -17,7 +17,7 @@ function Game() {
 		{ name: 'Burger', img: 'burger.jpg', id: uuid() },
 		{ name: 'Steak', img: 'steak.jpg', id: uuid() },
 	]);
-	const [cardsPlayed, setCard] = useState([]);
+	const [cardsPlayed, setCardsPlayed] = useState([]);
 
 	useEffect(() => {
 		console.log(cardsPlayed);
@@ -25,7 +25,7 @@ function Game() {
 		if (score > highScore) {
 			setHighScore(score);
 		}
-	}, [score, highScore]);
+	}, [score, highScore, cardsPlayed]);
 
 	function pushCard(cardObject) {
 		const isDuplicate = checkDuplicate(cardObject);
@@ -34,12 +34,13 @@ function Game() {
 			resetCardsPlayed();
 		} else {
 			setScore((prevScore) => prevScore + 1);
-			setCard(cardsPlayed.concat(cardObject));
+			setCardsPlayed(cardsPlayed.concat(cardObject));
+            shuffleArray()
 		}
 	}
 
 	function resetCardsPlayed() {
-		setCard([]);
+		setCardsPlayed([]);
         setScore(0);
 	}
 
@@ -51,10 +52,13 @@ function Game() {
 			}
 			return false;
 		}
+    }
 
-		return false;
-	}
-
+    function shuffleArray() {
+        const shuffleArray = gameCards.sort(() => Math.random() - 0.5)
+        setCards( shuffleArray )
+    }
+    
 	return (
 		<>
 			<Header score={score} highScore={highScore} />
